@@ -27,7 +27,7 @@ const startGame =() =>{
 
         if(err){
 
-            console.error(err);
+            console.log("Error al ejecutar");
             return;
 
         }
@@ -48,7 +48,7 @@ const createTableSql = `
 `;
 db.run(createTableSql, [], (err) => {
     if (err) {
-        console.error(err.message);
+        console.log("Error base de datos");
     }
 
     console.log("El juego está iniciando, por favor no cierres esta ventana");

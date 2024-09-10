@@ -123,4 +123,4 @@ module.exports = {
     getPlayer, 
     updateHighscore,
     deletePlayer
-    }
+}
