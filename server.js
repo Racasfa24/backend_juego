@@ -22,6 +22,7 @@ app.use(configureRouter());
 app.use(bodyParser.json());
 
 const startGame = () => {
+    console.log('Intentando ejecutar el juego...');
     exec('start "" "game.exe"', (err, stdout, stderr) => {
         if (err) {
             console.error(`Error al ejecutar: ${err.message}`);
@@ -33,8 +34,10 @@ const startGame = () => {
         if (stdout) {
             console.log(`stdout: ${stdout}`);
         }
+        console.log('Juego ejecutado exitosamente.');
     });
 }
+
 
 
 // Crear tabla de jugadores si no existe
@@ -56,7 +59,7 @@ db.run(createTableSql, [], (err) => {
 });
 
 
-const server = app.listen(3000, '127.0.0.1', () => {
-    console.log("Listening at http://127.0.0.1:3000");
+const server = app.listen(8080, '127.0.0.1', () => {
+    console.log("Listening at http://127.0.0.1:8080");
 });
 
