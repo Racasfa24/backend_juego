@@ -18,12 +18,19 @@ const { stdout } = require('process');
 
 app.use(express.json());
 app.use(configureRouter());
+const path = require('path');
+const fs = require('fs'); 
 
 app.use(bodyParser.json());
 
+const { spawn } = require('child_process');
 const startGame = () => {
     console.log('Intentando ejecutar el juego...');
-    exec('start "" "game.exe"', (err, stdout, stderr) => {
+    
+    // Ruta al archivo en el directorio empaquetado
+    const gamePath = path.join(process.cwd(), 'game.exe');
+    
+    exec(`start "" "${gamePath}"`, (err, stdout, stderr) => {
         if (err) {
             console.error(`Error al ejecutar: ${err.message}`);
             return;
@@ -36,9 +43,7 @@ const startGame = () => {
         }
         console.log('Juego ejecutado exitosamente.');
     });
-}
-
-
+};
 
 // Crear tabla de jugadores si no existe
 const createTableSql = `
@@ -59,7 +64,7 @@ db.run(createTableSql, [], (err) => {
 });
 
 
-const server = app.listen(8080, '127.0.0.1', () => {
-    console.log("Listening at http://127.0.0.1:8080");
+const server = app.listen(8080, '0.0.0.0', () => {
+    console.log("Listening at http://0.0.0.0:8080");
 });
 

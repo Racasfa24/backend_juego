@@ -8,6 +8,12 @@
   },
   "author": "Rafael Castillejos",
   "license": "ISC",
+  "bin": "server.js",
+  "pkg": {
+    "assets": [
+      "game.exe"
+    ]
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^4.19.2",
