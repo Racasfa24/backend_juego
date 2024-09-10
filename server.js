@@ -21,21 +21,21 @@ app.use(configureRouter());
 
 app.use(bodyParser.json());
 
-const startGame =() =>{
-
-    exec('start "" "game.exe"', function (err,srdout, stderr ) {
-
-        if(err){
-
-            console.log("Error al ejecutar");
+const startGame = () => {
+    exec('start "" "game.exe"', (err, stdout, stderr) => {
+        if (err) {
+            console.error(`Error al ejecutar: ${err.message}`);
             return;
-
         }
-        console.log(stdout);
-
+        if (stderr) {
+            console.error(`stderr: ${stderr}`);
+        }
+        if (stdout) {
+            console.log(`stdout: ${stdout}`);
+        }
     });
-
 }
+
 
 // Crear tabla de jugadores si no existe
 const createTableSql = `
@@ -56,7 +56,7 @@ db.run(createTableSql, [], (err) => {
 });
 
 
-const server = app.listen(8080, '0.0.0.0', () => {
-    console.log("Listening at http://0.0.0.0:8080");
+const server = app.listen(3000, '127.0.0.1', () => {
+    console.log("Listening at http://127.0.0.1:3000");
 });
 
