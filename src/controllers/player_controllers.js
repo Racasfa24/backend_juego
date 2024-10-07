@@ -1,21 +1,19 @@
 const db = require('../data_bases/db');
 const bcrypt = require('bcrypt');
+
 // Endpoint: Registrar jugador
 const registerPlayer = (req, res) => {
     const { name, password } = req.body;
-    const hash = bcrypt.hashSync(password, 10);
+    // Generar un hash de la contraseña
+    const hash = bcrypt.hashSync(password, 10); // Asegúrate de usar un salt adecuado
     const sql = 'INSERT INTO Players (name, password) VALUES (?, ?)';
     const params = [name, hash];
-    
+
     db.run(sql, params, function (err) {
-        if (err) {
-            console.error(err.message);
-            res.status(400).json({ error: err.message });
-            return;
-        }
         res.json({ id: this.lastID });
     });
 };
+
 
 // Endpoint: Autenticar jugador
 const autenticatePlayer = (req, res) => {
