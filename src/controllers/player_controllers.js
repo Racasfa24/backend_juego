@@ -51,7 +51,7 @@ const autenticatePlayer = (req, res) => {
 
 // Endpoint: Obtener todos los jugadores
 const postPlayers = (req, res) => {
-    const sql = 'SELECT id, name, highscore FROM Players';
+    const sql = 'SELECT id, name, highscore, time_played FROM Players';
     const params = [];
 
     db.all(sql, params, (err, rows) => {
@@ -81,11 +81,15 @@ const getPlayer = (req, res) => {
     });
 };
 
-// Endpoint: Actualizar highscore
+// Endpoint: Actualizar highscore y tiempo jugado
 const updateHighscore = (req, res) => {
-    const { id, highscore } = req.body;
-    const sql = 'UPDATE Players SET highscore = ? WHERE id = ? AND highscore < ?';
-    const params = [highscore, id, highscore];
+    const { id, highscore, time_played } = req.body; // Añadimos timePlayed a la solicitud
+    const sql = `
+        UPDATE Players 
+        SET highscore = ?, time_played = ? 
+        WHERE id = ? AND highscore < ?
+    `;
+    const params = [highscore, time_played, id, highscore];
 
     db.run(sql, params, function (err) {
         if (err) {
@@ -94,9 +98,10 @@ const updateHighscore = (req, res) => {
             return;
         }
         res.json({ changes: this.changes });
-        console.log("Highscore update called")
+        console.log("Highscore and time_played updated");
     });
 };
+
 
 // Endpoint: Eliminar jugador por ID
 const deletePlayer = (req, res) => {

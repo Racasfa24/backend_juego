@@ -51,7 +51,8 @@ const createTableSql = `
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL,
-        highscore INTEGER DEFAULT 0
+        highscore INTEGER DEFAULT 0,
+        time_played TEXT DEFAULT '00:00:00'
     );
 `;
 db.run(createTableSql, [], (err) => {
